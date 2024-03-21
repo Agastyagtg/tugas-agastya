@@ -1,0 +1,56 @@
+#include <stdio.h> 
+#include <string.h>
+
+//Fungsi untuk menentukan nilai numerik dari karakter kartu tertentu
+int nilai_kartu(char kartu) {
+    switch(kartu) {
+        case 'J':
+            return 11; 
+        case 'Q':
+            return 12; 
+        case 'K':
+            return 13; 
+        case '1':
+            return 10; 
+        default:
+            return kartu - '0';
+    }
+}
+
+int main() {
+    int n, i, j, min_swp = 0; // Variabel untuk menyimpan jumlah kartu, penghitung loop, dan jumlah swap minimum
+    char card[100]; // Array untuk menyimpan kartu - kartu
+    
+    // Baca jumlah kartu
+    scanf("%d", &n);
+
+    // Baca karakter karakter yang mewakili kartu - kartu ke dalam array card
+    for (i = 0; i < n; i++) {
+        scanf(" %c", &card[i]); // Spasi sebelum %c untuk melewati sepasi awal
+    }
+
+    // Mengurutkan kartu kartu menggunakan algoritma selection sort
+    for (i = 0; i < n; i++) {
+        int min_idx = i;
+        
+        // Temukan indeks kartu dengan nilai minimum dari i hingga n
+        for (j = i + 1; j < n; j++) {
+            if (nilai_kartu(card[j]) < nilai_kartu(card[min_idx])) {
+                min_idx = j;
+            }
+        }
+        
+        // Tukar kartu saat ini dengan nilai minimum jika perlu
+        if (min_idx != i) {
+            char temp = card[i]; 
+            card[i] = card[min_idx]; 
+            card[min_idx] = temp; 
+
+            // Tambahkan jumlah swap
+            min_swp++;
+        } 
+    }
+    // Cetak jumlah swap minimum yang di perlukan untuk mengurutkan kartu kartu
+    printf("%d\n", min_swp);
+    return 0;
+}
